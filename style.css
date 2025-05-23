@@ -1,0 +1,128 @@
+:root {
+  --primary-color: #ff6600;
+  --bg-color: #f8f8f8;
+  --text-color: #333;
+  --card-bg: #fff;
+  --border-radius: 12px;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: var(--bg-color);
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.menu-container, .cart-container {
+  flex: 1;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.menu-container {
+  background: var(--bg-color);
+  border-right: 2px solid #ddd;
+}
+
+.cart-container {
+  background: #fff;
+}
+
+h1, h2 {
+  margin-top: 0;
+  color: var(--text-color);
+}
+
+.menu-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 15px;
+}
+
+.menu-item {
+  background: var(--card-bg);
+  padding: 16px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+.menu-item:hover {
+  transform: translateY(-4px);
+}
+
+.menu-item h3 {
+  margin: 10px 0 5px;
+}
+
+.menu-item input {
+  width: 60px;
+  padding: 5px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.menu-item button {
+  background: var(--primary-color);
+  border: none;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.menu-item button:hover {
+  background: #e55a00;
+}
+
+.cart-container ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.cart-container li {
+  padding: 6px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.cart-container button {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  font-size: 16px;
+  border-radius: var(--border-radius);
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.actions {
+  margin-top: 20px;
+}
+
+.actions button {
+  background: #444;
+  color: white;
+  margin-right: 10px;
+  padding: 10px 14px;
+  border-radius: var(--border-radius);
+  font-size: 15px;
+  border: none;
+  cursor: pointer;
+}
+
+.actions button:hover {
+  background: #222;
+}

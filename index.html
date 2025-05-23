@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Masa Sifarişi</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="menu-container">
+    <h1>Menyu</h1>
+    <div class="menu-items" id="menuItems"></div>
+  </div>
+
+  <div class="cart-container">
+    <h2>Səbət</h2>
+    <ul id="cartItems"></ul>
+    <p>Cəmi: <span id="totalPrice">0 ₼</span></p>
+    <button onclick="confirmOrder()">Sifarişi Təsdiqlə</button>
+    <button onclick="clearCart()" style="background:#999; margin-top:10px;">Səbəti Təmizlə</button>
+    <div class="actions">
+      <button onclick="callWaiter()">Ofisiant Çağır</button>
+      <button onclick="requestBill()">Hesabı İstə</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
