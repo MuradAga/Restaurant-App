@@ -248,7 +248,7 @@ document.addEventListener('DOMContentLoaded', () => {
         filteredItems.forEach(item => {
             const menuItemDiv = document.createElement('div');
             menuItemDiv.className = 'menu-item';
-            
+
             const itemName = getTranslation(`item_${item.id}_name`) || "Unknown Item";
             const itemDescription = getTranslation(`item_${item.id}_description`) || "No description available.";
 
