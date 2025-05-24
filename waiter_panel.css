@@ -1,0 +1,189 @@
+/* waiter_panel.css */
+
+:root {
+    --panel-bg-color: #f8f9fa;
+    --section-bg-color: #ffffff;
+    --border-light: #e0e0e0;
+    --text-dark: #333;
+    --status-new: #007bff; /* Mavi */
+    --status-preparing: #ffc107; /* Sarı */
+    --status-delivered: #28a745; /* Yaşıl */
+    --status-cancelled: #dc3545; /* Qırmızı */
+    --request-call: #6c757d; /* Boz */
+    --request-bill: #17a2b8; /* Açıq Mavi */
+    --shadow-light: rgba(0, 0, 0, 0.08);
+}
+
+body {
+    background-color: var(--panel-bg-color);
+}
+
+header {
+    background-color: var(--primary-color); /* Əsas stil faylınızdan gələn rəng */
+    color: white;
+    padding: 20px 0;
+    box-shadow: 0 2px 10px var(--shadow-light);
+}
+
+header h1 {
+    text-align: center;
+    margin: 0;
+    font-size: 2em;
+}
+
+.waiter-panel {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    padding: 30px 0;
+    max-width: 1200px;
+    margin: 20px auto; /* Mərkəzləşdirmək üçün */
+}
+
+.panel-section {
+    background-color: var(--section-bg-color);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px var(--shadow-light);
+    display: flex;
+    flex-direction: column;
+}
+
+.panel-section h2 {
+    color: var(--primary-color);
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.panel-section h2 .fas {
+    color: var(--text-dark); /* İşarənin rəngi */
+}
+
+.orders-list, .requests-list {
+    flex-grow: 1;
+    overflow-y: auto; /* Məzmun çox olduqda scroll */
+    max-height: 70vh; /* Panelin hündürlüyünə görə tənzimləyin */
+    padding-right: 10px; /* Scrollbar üçün boşluq */
+}
+
+/* Scrollbar stilləri */
+.orders-list::-webkit-scrollbar,
+.requests-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.orders-list::-webkit-scrollbar-track,
+.requests-list::-webkit-scrollbar-track {
+    background: var(--panel-bg-color);
+    border-radius: 10px;
+}
+
+.orders-list::-webkit-scrollbar-thumb,
+.requests-list::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color);
+    border-radius: 10px;
+    border: 2px solid var(--panel-bg-color);
+}
+
+.order-card, .request-card {
+    background-color: #fcfcfc;
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.order-card h3, .request-card h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: var(--text-dark);
+    font-size: 1.2em;
+}
+
+.order-card p, .request-card p {
+    margin: 5px 0;
+    color: var(--text-dark);
+}
+
+.order-card ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+    border-top: 1px dashed var(--border-light);
+    padding-top: 10px;
+}
+
+.order-card ul li {
+    margin-bottom: 5px;
+    color: var(--text-dark);
+    display: flex;
+    justify-content: space-between;
+}
+
+.order-actions button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.order-actions button:hover {
+    background-color: var(--primary-dark-color); /* style.css-dən götürülə bilər */
+}
+
+.order-actions button:last-child {
+    margin-right: 0;
+}
+
+/* Status rəngləri */
+.order-status {
+    font-weight: bold;
+    padding: 4px 8px;
+    border-radius: 5px;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.status-new { background-color: var(--status-new); color: white; }
+.status-preparing { background-color: var(--status-preparing); color: var(--text-dark); }
+.status-delivered { background-color: var(--status-delivered); color: white; }
+.status-cancelled { background-color: var(--status-cancelled); color: white; }
+
+/* Xidmət sorğuları üçün düymələr */
+.request-actions button {
+    background-color: var(--request-call);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.request-actions button.resolve-request:hover {
+    background-color: #5a6268; /* Bozun tündü */
+}
+
+.no-items-message {
+    text-align: center;
+    color: var(--text-color-light); /* style.css-dən gəlir */
+    font-style: italic;
+    margin-top: 20px;
+}
+
+/* Responsive dizayn */
+@media (max-width: 768px) {
+    .waiter-panel {
+        grid-template-columns: 1fr;
+        padding: 20px;
+    }
+}
