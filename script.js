@@ -1,64 +1,447 @@
-const menu = [
-  { id: 1, name: "Pizza", price: 12 },
-  { id: 2, name: "Burger", price: 8 },
-  { id: 3, name: "Salat", price: 6 }
-];
+document.addEventListener('DOMContentLoaded', () => {
+    // HTML elementlərini seçirik
+    const mainContent = document.getElementById('main-content');
+    const header = document.querySelector('header');
+    const menuGrid = document.querySelector('.menu-items-grid');
+    const orderList = document.querySelector('.order-list');
+    const totalPriceSpan = document.getElementById('total-price');
+    const clearCartBtn = document.getElementById('clear-cart-btn');
+    const confirmOrderBtn = document.getElementById('confirm-order-btn');
+    const languageSelector = document.getElementById('language');
+    const emptyCartMessage = document.querySelector('.empty-cart-message');
+    const tableNumberInput = document.getElementById('table-num');
+    const categoryButtonsContainer = document.querySelector('.category-buttons-container'); // Kateqoriya düymələri üçün konteyner
 
-const cart = [];
+    // Sifariş təsdiq səhifəsinin elementləri
+    const confirmationPage = document.getElementById('confirmation-page');
+    const addToOrderBtn = document.getElementById('add-to-order-btn');
+    const callWaiterBtn = document.getElementById('call-waiter-btn');
+    const requestBillBtn = document.getElementById('request-bill-btn');
+    const paymentOptions = document.getElementById('payment-options');
+    const paymentCashBtn = document.querySelector('.payment-cash');
+    const paymentCardBtn = document.querySelector('.payment-card');
+    const estimatedTimeDisplay = document.getElementById('estimated-time');
 
-function renderMenu() {
-  const menuDiv = document.getElementById("menuItems");
-  menu.forEach(item => {
-    const div = document.createElement("div");
-    div.className = "menu-item";
-    div.innerHTML = `
-      <h3>${item.name}</h3>
-      <p>${item.price} ₼</p>
-      <input type="number" min="1" value="1" id="qty-${item.id}">
-      <button onclick="addToCart(${item.id})">Əlavə et</button>
-    `;
-    menuDiv.appendChild(div);
-  });
-}
+    // Custom Modal elementləri
+    const customModal = document.getElementById('custom-modal');
+    const modalMessage = document.getElementById('modal-message');
+    const modalOkButton = document.getElementById('modal-ok-button');
+    const closeModalButton = document.querySelector('.modal .close-button');
 
-function addToCart(id) {
-  const qty = parseInt(document.getElementById(`qty-${id}`).value);
-  const item = menu.find(m => m.id === id);
-  cart.push({ ...item, quantity: qty });
-  updateCart();
-}
+    let cart = []; // Səbətdəki məhsulları saxlayan array
+    let currentLang = 'az'; // Cari dil, default Azərbaycan
+    let activeCategory = 'all'; // Aktiv kateqoriya, default 'all'
 
-function updateCart() {
-  const list = document.getElementById("cartItems");
-  list.innerHTML = "";
-  let total = 0;
-  cart.forEach(item => {
-    const li = document.createElement("li");
-    li.textContent = `${item.name} x${item.quantity} = ${item.quantity * item.price} ₼`;
-    list.appendChild(li);
-    total += item.quantity * item.price;
-  });
-  document.getElementById("totalPrice").textContent = total + " ₼";
-}
+    // Menyu məlumatları (hər məhsula `category` sahəsi əlavə edildi)
+    const menuItems = [
+        { id: 1, price: 4.90, image: "files/product1.jpg", category: "burger" },
+        { id: 2, price: 4.10, image: "files/product2.jpg", category: "burger" },
+        { id: 3, price: 4.35, image: "files/product3.jpg", category: "burger" },
+        { id: 4, price: 3.50, image: "files/product4.jpg", category: "sandwich" },
+        { id: 5, price: 4.50, image: "files/product5.jpg", category: "burger" },
+        { id: 6, price: 2.00, image: "files/product6.jpg", category: "side" },
+        { id: 7, price: 1.50, image: "files/product7.png", category: "drink" },
+        { id: 8, price: 1.00, image: "files/product8.png", category: "drink" }
+    ];
 
-function confirmOrder() {
-  alert("Sifariş təsdiqləndi!");
-  // Burada API-yə POST göndərə bilərik
-}
+    // Kateqoriya məlumatları
+    const categories = [
+        { key: "all", az: "Hamısı", en: "All", ru: "Все" },
+        { key: "burger", az: "Burgerlər", en: "Burgers", ru: "Бургеры" },
+        { key: "sandwich", az: "Sendviçlər", en: "Sandwiches", ru: "Сэндвичи" },
+        { key: "side", az: "Əlavələr", en: "Sides", ru: "Гарниры" },
+        { key: "drink", az: "İçkilər", en: "Drinks", ru: "Напитки" }
+    ];
 
-function callWaiter() {
-  alert("Ofisianta xəbər verildi!");
-}
+    // Tərcümə məlumatları (Rus dili üçün fallback ilə)
+    const translations = {
+        az: {
+            title: "NinjaGrill - Onlayn Sifariş",
+            tableNumberLabel: "Masa Nömrəsi:",
+            languageLabel: "Dil:",
+            yourOrder: "Sizin Sifarişiniz",
+            emptyCart: "Səbətiniz boşdur.",
+            totalPrice: "Ümumi Qiymət:",
+            clearCart: "Səbəti Təmizlə",
+            confirmOrder: "Sifarişi Təsdiqlə",
+            orderConfirmed: "Sifarişiniz Təsdiqləndi!",
+            orderSuccess: "Sifarişiniz uğurla qəbul edildi. Ofisiant qısa zamanda sizinlə əlaqə saxlayacaq.",
+            addToOrder: "Sifarişə Əlavə Et",
+            callWaiter: "Ofisiantı Çağır",
+            requestBill: "Hesabı İstə",
+            cash: "Nağd",
+            card: "Kart",
+            estimatedTime: "Təxmini bitmə müddəti:",
+            waiterCalled: "Ofisiant çağırıldı! Qısa zamanda sizə yaxınlaşacaq.",
+            billRequested: "Hesab tələbi göndərildi! Ödəniş növünü seçin.",
+            paymentMethodSelected: "Ödəniş növü: {method} seçildi. Ofisiant hesabı gətirəcək.",
+            backToMenu: "Menyuya Qayıt",
+            selectItems: "Zəhmət olmasa sifariş etmək üçün məhsul seçin.",
+            // Menu item translations
+            item_1_name: "Texas Burger",
+            item_1_description: "Mal əti, cheddar pendiri, göbələk, pomidor, soğan, Barbekü sousu",
+            item_2_name: "California Burger",
+            item_2_description: "Mal əti, cheddar pendiri, kahı, pomidor, qırmızı soğan, Kaliforniya sousu",
+            item_3_name: "Double Cheese Burger",
+            item_3_description: "İkiqat mal əti, ikiqat cheddar pendiri, kahı, pomidor, qırmızı soğan, xüsusi sous",
+            item_4_name: "Toyuq Sendviç",
+            item_4_description: "Toyuq filesi, kahı, pomidor, xüsusi sous",
+            item_5_name: "Vegan Burger",
+            item_5_description: "Noxud kotleti, avokado, kahı, pomidor, vegan sousu",
+            item_6_name: "Kartof Qızartması (böyük)",
+            item_6_description: "Böyük porsiya kartof qızartması",
+            item_7_name: "Coca-Cola (0.5L)",
+            item_7_description: "Soyuq Coca-Cola",
+            item_8_name: "Su (0.5L)",
+            item_8_description: "Qazsız su"
+        },
+        en: {
+            title: "NinjaGrill - Online Order",
+            tableNumberLabel: "Table Number:",
+            languageLabel: "Language:",
+            yourOrder: "Your Order",
+            emptyCart: "Your cart is empty.",
+            totalPrice: "Total Price:",
+            clearCart: "Clear Cart",
+            confirmOrder: "Confirm Order",
+            orderConfirmed: "Order Confirmed!",
+            orderSuccess: "Your order has been successfully received. The waiter will contact you shortly.",
+            addToOrder: "Add to Order",
+            callWaiter: "Call Waiter",
+            requestBill: "Request Bill",
+            cash: "Cash",
+            card: "Card",
+            estimatedTime: "Estimated completion time:",
+            waiterCalled: "Waiter called! They will approach you shortly.",
+            billRequested: "Bill request sent! Please select payment method.",
+            paymentMethodSelected: "Payment method: {method} selected. The waiter will bring the bill.",
+            backToMenu: "Back to Menu",
+            selectItems: "Please select items to order.",
+            // Menu item translations
+            item_1_name: "Texas Burger",
+            item_1_description: "Beef, cheddar cheese, mushrooms, tomatoes, onions, BBQ sauce",
+            item_2_name: "California Burger",
+            item_2_description: "Beef, cheddar cheese, lettuce, tomatoes, red onion, California sauce",
+            item_3_name: "Double Cheese Burger",
+            item_3_description: "Double beef, double cheddar cheese, lettuce, tomatoes, red onion, special sauce",
+            item_4_name: "Chicken Sandwich",
+            item_4_description: "Chicken fillet, lettuce, tomatoes, special sauce",
+            item_5_name: "Vegan Burger",
+            item_5_description: "Chickpea patty, avocado, lettuce, tomatoes, vegan sauce",
+            item_6_name: "Fries (large)",
+            item_6_description: "Large portion of french fries",
+            item_7_name: "Coca-Cola (0.5L)",
+            item_7_description: "Cold Coca-Cola",
+            item_8_name: "Water (0.5L)",
+            item_8_description: "Still water"
+        },
+        ru: {
+            // Rus dili üçün tərcümələr. Əgər bir tərcümə yoxdursa, Azərbaycan dilindən götürüləcək.
+            title: "NinjaGrill - Онлайн Заказ",
+            tableNumberLabel: "Номер Стола:",
+            languageLabel: "Язык:",
+            yourOrder: "Ваш Заказ",
+            emptyCart: "Ваша корзина пуста.",
+            totalPrice: "Общая Стоимость:",
+            clearCart: "Очистить Корзину",
+            confirmOrder: "Подтвердить Заказ",
+            orderConfirmed: "Заказ Подтвержден!",
+            orderSuccess: "Ваш заказ успешно принят. Официант свяжется с вами в ближайшее время.",
+            addToOrder: "Добавить к Заказу",
+            callWaiter: "Вызвать Официанта",
+            requestBill: "Запросить Счет",
+            cash: "Наличные",
+            card: "Карта",
+            estimatedTime: "Примерное время выполнения:",
+            waiterCalled: "Официант вызван! Он подойдет к вам в ближайшее время.",
+            billRequested: "Запрос счета отправлен! Пожалуйста, выберите способ оплаты.",
+            paymentMethodSelected: "Способ оплаты: {method} выбран. Официант принесет счет.",
+            backToMenu: "Вернуться в Меню"
+            // Digər menyu elementləri üçün tərcümələr Azərbaycan dilindən fallback olacaq
+            // Məsələn: item_1_name: "Техасский Бургер"
+        }
+    };
 
-function requestBill() {
-  const method = confirm("Nağd ödəniş? OK = Nağd, İmtina = Kart");
-  alert(`Ödəniş növü: ${method ? "Nağd" : "Kart"}`);
-}
+    // Tərcüməni əldə etmək üçün köməkçi funksiya (fallback ilə)
+    function getTranslation(key) {
+        if (translations[currentLang] && translations[currentLang][key]) {
+            return translations[currentLang][key];
+        }
+        // Rus dili üçün Azərbaycan dilindən fallback
+        if (currentLang === 'ru' && translations['az'][key]) {
+            return translations['az'][key];
+        }
+        return key; // Tərcümə tapılmasa, açarı qaytar
+    }
 
-function clearCart() {
-  cart.length = 0;
-  updateCart();
-}
+    // Custom Modalı göstərən funksiya
+    function showModal(message) {
+        modalMessage.textContent = message;
+        customModal.classList.add('show');
+    }
 
+    // Custom Modalı gizlədən funksiya
+    function hideModal() {
+        customModal.classList.remove('show');
+    }
 
-renderMenu();
+    // Modal düymələrinə event listenerlər
+    modalOkButton.addEventListener('click', hideModal);
+    closeModalButton.addEventListener('click', hideModal);
+    window.addEventListener('click', (event) => {
+        if (event.target === customModal) {
+            hideModal();
+        }
+    });
+
+    // Mətnləri cari dilə uyğun yeniləyən funksiya
+    function updateTexts() {
+        document.title = getTranslation('title');
+        // data-key atributu olan bütün elementləri yeniləyirik
+        document.querySelectorAll('[data-key]').forEach(element => {
+            const key = element.getAttribute('data-key');
+            element.textContent = getTranslation(key);
+        });
+        // Sadece "Ümumi Qiymət:" hissəsini yeniləyirik, rəqəmi renderCart() idarə edir.
+        document.querySelector('.order-totals p span[data-key="totalPrice"]').textContent = getTranslation('totalPrice');
+
+        renderCategoryButtons(); // Kateqoriya düymələrini yeniləmək üçün
+        renderMenuItems(); // Menyu elementlərinin adlarını və təsvirlərini yeniləmək üçün
+        renderCart(); // Dili dəyişdikdə səbətdəki mətnləri və qiyməti yeniləmək üçün
+    }
+
+    // Dil dəyişəndə
+    languageSelector.addEventListener('change', (e) => {
+        currentLang = e.target.value;
+        updateTexts();
+    });
+
+    // Kateqoriya düymələrini yaratma funksiyası
+    function renderCategoryButtons() {
+        categoryButtonsContainer.innerHTML = '';
+        categories.forEach(category => {
+            const button = document.createElement('button');
+            button.className = `category-button ${activeCategory === category.key ? 'active' : ''}`;
+            button.dataset.category = category.key;
+            button.textContent = getTranslation(category.key); // Kateqoriya adlarını tərcümə et
+            button.addEventListener('click', () => {
+                activeCategory = category.key;
+                renderCategoryButtons(); // Aktiv kateqoriya stilini yeniləmək üçün
+                renderMenuItems(); // Yeni kateqoriyaya uyğun menyunu yüklə
+            });
+            categoryButtonsContainer.appendChild(button);
+        });
+    }
+
+    // Menyu məhsullarını dinamik yükləmə
+    function renderMenuItems() {
+        if (!menuGrid) {
+            console.error("Xəta: '.menu-items-grid' elementi HTML-də tapılmadı. Menyu məhsulları göstərilə bilməz.");
+            return;
+        }
+
+        menuGrid.innerHTML = '';
+        const filteredItems = activeCategory === 'all'
+            ? menuItems
+            : menuItems.filter(item => item.category === activeCategory);
+
+        filteredItems.forEach(item => {
+            const menuItemDiv = document.createElement('div');
+            menuItemDiv.className = 'menu-item';
+            
+            const itemName = getTranslation(`item_${item.id}_name`) || "Unknown Item";
+            const itemDescription = getTranslation(`item_${item.id}_description`) || "No description available.";
+
+            menuItemDiv.innerHTML = `
+                <img src="${item.image}" alt="${itemName}" onerror="this.onerror=null;this.src='https://placehold.co/400x300/FF6600/FFFFFF?text=Image+Not+Found';">
+                <div class="item-info">
+                    <h3>${itemName}</h3>
+                    <p>${itemDescription}</p>
+                    <div class="item-price">${item.price.toFixed(2)} AZN</div>
+                    <div class="item-actions">
+                        <button data-id="${item.id}" data-action="decrease">-</button>
+                        <span id="quantity-${item.id}">0</span>
+                        <button data-id="${item.id}" data-action="increase">+</button>
+                    </div>
+                </div>
+            `;
+            menuGrid.appendChild(menuItemDiv);
+
+            const existingItem = cart.find(cartItem => cartItem.id === item.id);
+            if (existingItem) {
+                document.getElementById(`quantity-${item.id}`).textContent = existingItem.quantity;
+            }
+        });
+    }
+
+    // Səbətə məhsul əlavə etmək/çıxmaq
+    menuGrid.addEventListener('click', (e) => {
+        const button = e.target;
+        if (button.tagName === 'BUTTON' && button.dataset.id) {
+            const itemId = parseInt(button.dataset.id);
+            const action = button.dataset.action;
+            const item = menuItems.find(i => i.id === itemId);
+
+            if (!item) return;
+
+            let cartItem = cart.find(c => c.id === itemId);
+
+            if (action === 'increase') {
+                if (cartItem) {
+                    cartItem.quantity++;
+                } else {
+                    cart.push({
+                        ...item,
+                        name: getTranslation(`item_${item.id}_name`) || "Unknown Item", // Tərcümə olunmuş adı əlavə et
+                        quantity: 1
+                    });
+                }
+            } else if (action === 'decrease') {
+                if (cartItem && cartItem.quantity > 0) {
+                    cartItem.quantity--;
+                    if (cartItem.quantity === 0) {
+                        cart = cart.filter(c => c.id !== itemId);
+                    }
+                }
+            }
+            updateQuantityDisplay(itemId);
+            renderCart();
+        }
+    });
+
+    // Menyu gridində miqdar göstəricisini yeniləmə
+    function updateQuantityDisplay(itemId) {
+        const quantitySpan = document.getElementById(`quantity-${itemId}`);
+        if (quantitySpan) {
+            const cartItem = cart.find(c => c.id === itemId);
+            quantitySpan.textContent = cartItem ? cartItem.quantity : 0;
+        }
+    }
+
+    // Səbəti yeniləmə funksiyası
+    function renderCart() {
+        orderList.innerHTML = '';
+        let total = 0;
+
+        if (cart.length === 0) {
+            emptyCartMessage.style.display = 'block';
+        } else {
+            emptyCartMessage.style.display = 'none';
+            cart.forEach(item => {
+                const orderItemDiv = document.createElement('div');
+                orderItemDiv.className = 'order-item';
+                // Səbətdəki məhsulun adını tərcümə obyektindən götürürük
+                const displayItemName = getTranslation(`item_${item.id}_name`) || item.name;
+
+                orderItemDiv.innerHTML = `
+                    <div class="order-item-details">
+                        <span>${item.quantity}x</span>
+                        <span>${displayItemName}</span>
+                    </div>
+                    <span class="order-item-price">${(item.quantity * item.price).toFixed(2)} AZN</span>
+                `;
+                orderList.appendChild(orderItemDiv);
+                total += item.quantity * item.price;
+            });
+        }
+        totalPriceSpan.textContent = total.toFixed(2);
+    }
+
+    // Səbəti təmizlə düyməsi
+    clearCartBtn.addEventListener('click', () => {
+        cart = [];
+        renderCart();
+        renderMenuItems(); // Miqdarları sıfırlamaq üçün menyunu yenidən çəkirik
+    });
+
+    // Sifarişi təsdiqlə düyməsi
+    confirmOrderBtn.addEventListener('click', () => {
+        if (cart.length === 0) {
+            showModal(getTranslation('selectItems'));
+            return;
+        }
+
+        const tableNumber = tableNumberInput.value;
+        const orderDetails = {
+            tableNumber: tableNumber,
+            items: cart.map(item => ({
+                id: item.id,
+                name: getTranslation(`item_${item.id}_name`) || item.name,
+                quantity: item.quantity,
+                price: item.price
+            })),
+            total: parseFloat(totalPriceSpan.textContent)
+        };
+
+        console.log("Sifariş Göndərildi:", orderDetails);
+        showModal(getTranslation('orderConfirmed') + "\n\n" + JSON.stringify(orderDetails, null, 2));
+
+        mainContent.style.display = 'none';
+        header.style.display = 'none';
+        confirmationPage.classList.add('active');
+
+        estimatedTimeDisplay.textContent = '';
+        setTimeout(() => {
+            const estimatedTime = Math.floor(Math.random() * 10) + 15;
+            estimatedTimeDisplay.textContent = `${getTranslation('estimatedTime')} ${estimatedTime} dəqiqə.`;
+        }, 3000);
+    });
+
+    // Sifarişə əlavə et düyməsi
+    addToOrderBtn.addEventListener('click', () => {
+        confirmationPage.classList.remove('active');
+        mainContent.style.display = 'flex';
+        header.style.display = 'flex';
+        paymentOptions.style.display = 'none';
+        estimatedTimeDisplay.textContent = '';
+    });
+
+    // Ofisiantı çağır düyməsi
+    callWaiterBtn.addEventListener('click', () => {
+        showModal(getTranslation('waiterCalled'));
+    });
+
+    // Hesabı istə düyməsi
+    requestBillBtn.addEventListener('click', () => {
+        paymentOptions.style.display = 'flex';
+        showModal(getTranslation('billRequested'));
+    });
+
+    // Nağd ödəniş seçimi
+    paymentCashBtn.addEventListener('click', () => {
+        showModal(getTranslation('paymentMethodSelected').replace('{method}', getTranslation('cash')));
+        setTimeout(() => {
+            cart = [];
+            renderCart();
+            renderMenuItems();
+            confirmationPage.classList.remove('active');
+            mainContent.style.display = 'flex';
+            header.style.display = 'flex';
+            paymentOptions.style.display = 'none';
+            estimatedTimeDisplay.textContent = '';
+            showModal(getTranslation('backToMenu'));
+        }, 2000);
+    });
+
+    // Kartla ödəniş seçimi
+    paymentCardBtn.addEventListener('click', () => {
+        showModal(getTranslation('paymentMethodSelected').replace('{method}', getTranslation('card')));
+        setTimeout(() => {
+            cart = [];
+            renderCart();
+            renderMenuItems();
+            confirmationPage.classList.remove('active');
+            mainContent.style.display = 'flex';
+            header.style.display = 'flex';
+            paymentOptions.style.display = 'none';
+            estimatedTimeDisplay.textContent = '';
+            showModal(getTranslation('backToMenu'));
+        }, 2000);
+    });
+
+    // Başlanğıcda hər şeyi yüklə
+    renderCategoryButtons(); // Əvvəlcə kateqoriya düymələrini yüklə
+    renderMenuItems();
+    renderCart();
+    updateTexts(); // Başlanğıcda mətnləri cari dilə uyğun yenilə
+});
