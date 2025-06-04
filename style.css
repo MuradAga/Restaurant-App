@@ -1,719 +1,768 @@
-/* Google Fonts - Inter */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
-:root {
-    --primary-color: #ff6600; /* TabletMenu narıncı rəngi */
-    --secondary-color: #f0f0f0;
-    --text-color: #333;
-    --border-color: #ddd;
-    --bg-color: #f8f8f8;
-    --card-bg-color: #fff;
-    --shadow-light: rgba(0,0,0,0.05);
-    --shadow-medium: rgba(0,0,0,0.1);
-}
-
-* {
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Inter', Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    overflow-x: hidden; /* Üfüqi scrollu əngəlləyirik */
-}
-
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 30px;
-    background-color: var(--card-bg-color);
-    border-bottom: 1px solid var(--border-color);
-    box-shadow: 0 2px 4px var(--shadow-light);
-    flex-wrap: wrap; /* Kiçik ekranlarda bükülməsi üçün */
-    gap: 15px; /* Elementlər arasında boşluq */
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.logo img {
-    height: 50px; /* Logo ölçüsü */
-    border-radius: 8px;
-}
-
-.logo h1 {
-    font-size: 32px;
-    color: var(--primary-color);
-    margin: 0;
-    font-weight: 700;
-}
-
-nav {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    flex-wrap: wrap;
-}
-
-.table-number-input,
-.lang-selector {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.table-number-input label,
-.lang-selector label {
-    font-size: 16px;
-    color: var(--text-color);
-    font-weight: 500;
-}
-
-.table-number-input input,
-.lang-selector select {
-    padding: 8px 12px;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    background-color: var(--secondary-color);
-    font-size: 16px;
-    cursor: pointer;
-    outline: none;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.table-number-input input:focus,
-.lang-selector select:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 2px rgba(255, 102, 0, 0.2);
-}
-
-main {
-    display: flex;
-    flex-grow: 1;
-    padding: 25px;
-    gap: 25px; /* Sectionlar arasında boşluq */
-    flex-wrap: wrap; /* Kiçik ekranlarda bükülməsi üçün */
-}
-
-.menu-section {
-    flex: 3; /* Menyu hissəsi daha geniş olsun */
-    min-width: 60%; /* Minimum en */
-    background-color: var(--card-bg-color);
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px var(--shadow-medium);
-    display: flex; /* İçərisindəki elementləri flex ilə idarə etmək üçün */
-    flex-direction: column; /* Kateqoriyalar yuxarıda, menyu aşağıda */
-    gap: 20px; /* Kateqoriyalar və menyu arasında boşluq */
-}
-
-.category-buttons-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 10px; /* Kateqoriyalar və menyu arasında əlavə boşluq */
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 15px;
-}
-
-.category-button {
-    padding: 10px 20px;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    background-color: var(--secondary-color);
-    color: var(--text-color);
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.1s ease;
-    box-shadow: 0 2px 5px var(--shadow-light);
-}
-
-.category-button:hover {
-    background-color: #e0e0e0;
-    transform: translateY(-2px);
-}
-
-.category-button.active {
-    background-color: var(--primary-color);
-    color: white;
-    border-color: var(--primary-color);
-    box-shadow: 0 4px 10px rgba(255, 102, 0, 0.3);
-}
-
-.category-button.active:hover {
-    background-color: #e65c00;
-    transform: translateY(-2px);
-}
-
-
-.menu-items-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsiv grid */
-    gap: 25px;
-}
-
-.menu-item {
-    background-color: var(--card-bg-color);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    box-shadow: 0 4px 10px var(--shadow-light);
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-}
-
-.menu-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px var(--shadow-medium);
-}
-
-.menu-item img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    border-bottom: 1px solid var(--border-color);
-    border-radius: 12px 12px 0 0;
-}
-
-.item-info {
-    padding: 15px;
-    flex-grow: 1; /* Mətn hissəsinin böyüməsini təmin edir */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 100%;
-}
-
-.item-info h3 {
-    margin-top: 0;
-    margin-bottom: 10px;
-    font-size: 22px;
-    color: var(--primary-color);
-    font-weight: 600;
-}
-
-.item-info p {
-    font-size: 15px;
-    color: #666;
-    margin-bottom: 15px;
-    line-height: 1.5;
-}
-
-.item-price {
-    font-size: 24px;
-    font-weight: bold;
-    color: var(--text-color);
-    margin-bottom: 15px;
-}
-
-.item-actions {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    margin-top: 10px;
-}
-
-.item-actions button {
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 20px;
-    transition: background-color 0.3s ease, transform 0.1s ease;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-
-.item-actions button:hover {
-    background-color: #e65c00;
-    transform: translateY(-2px);
-}
-
-.item-actions button:active {
-    transform: translateY(0);
-    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-}
-
-.item-actions span {
-    font-size: 22px;
-    font-weight: bold;
-    color: var(--text-color);
-    min-width: 35px;
-    text-align: center;
-}
-
-.btn {
-    padding: 14px 28px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 18px;
-    font-weight: 600;
-    transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
-    text-decoration: none; /* Link kimi istifadə oluna bilər */
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-}
-
-.btn.primary {
-    background-color: var(--primary-color);
-    color: white;
-    box-shadow: 0 4px 10px rgba(255, 102, 0, 0.3);
-}
-
-.btn.primary:hover {
-    background-color: #e65c00;
-    transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(255, 102, 0, 0.4);
-}
-
-.btn.primary:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 5px rgba(255, 102, 0, 0.4);
-}
-
-.btn.secondary {
-    background-color: var(--secondary-color);
-    color: var(--text-color);
-    border: 1px solid var(--border-color);
-    box-shadow: 0 2px 5px var(--shadow-light);
-}
-
-.btn.secondary:hover {
-    background-color: #e0e0e0;
-    transform: translateY(-3px);
-    box-shadow: 0 4px 10px var(--shadow-medium);
-}
-
-.btn.secondary:active {
-    transform: translateY(0);
-    box-shadow: 0 1px 3px var(--shadow-medium);
-}
-
-.order-summary-section {
-    flex: 1; /* Sifariş xülasəsi hissəsi daha dar olsun */
-    min-width: 300px;
-    background-color: var(--card-bg-color);
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px var(--shadow-medium);
-    display: flex;
-    flex-direction: column;
-}
-
-.order-summary-section h2 {
-    margin-top: 0;
-    color: var(--primary-color);
-    font-size: 28px;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-    font-weight: 600;
-}
-
-.order-list {
-    flex-grow: 1;
-    overflow-y: auto; /* Sifarişlər çox olduqda scroll edilsin */
-    max-height: 50vh; /* Maksimum hündürlük */
-    margin-bottom: 20px;
-    padding-right: 10px; /* Scrollbar üçün yer */
-}
-
-.order-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 0;
-    border-bottom: 1px dashed var(--border-color);
-}
-
-.order-item:last-child {
-    border-bottom: none;
-}
-
-.order-item-details {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 17px;
-}
-
-.order-item-details span {
-    font-weight: 500;
-    color: var(--text-color);
-}
-
-.order-item-price {
-    font-weight: bold;
-    color: var(--primary-color);
-    font-size: 18px;
-}
-
-.empty-cart-message {
-    text-align: center;
-    color: #888;
-    font-style: italic;
-    padding: 20px;
-    font-size: 16px;
-}
-
-.order-totals {
-    text-align: right;
-    padding-top: 15px;
-    border-top: 1px solid var(--border-color);
-    margin-top: auto; /* Aşağıya yapışdırır */
-}
-
-.order-totals p {
-    font-size: 26px;
-    font-weight: bold;
-    color: var(--text-color);
-    margin: 0;
-}
-
-.order-totals #total-price {
-    color: var(--primary-color);
-}
-
-.order-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-top: 20px;
-}
-
-/* Sifariş təsdiq səhifəsi üçün stilizasiya (Gizli qalacaq, JS ilə göstəriləcək) */
-.confirmation-page {
-    display: none; /* Başlanğıcda gizli */
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 50px;
-    background-color: var(--bg-color);
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1000;
-}
-
-.confirmation-page.active {
-    display: flex; /* Aktiv olduqda göstər */
-}
-
-.confirmation-page h2 {
-    color: var(--primary-color);
-    font-size: 36px;
-    margin-bottom: 20px;
-}
-
-.confirmation-page p {
-    font-size: 18px;
-    color: #666;
-    margin-bottom: 30px;
-}
-
-.confirmation-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.payment-options {
-    display: none; /* Başlanğıcda gizli */
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 15px;
-}
-
-.estimated-time-display {
-    margin-top: 20px;
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--primary-color);
-}
-
-/* Custom Modal Stili */
-.modal {
-    display: none; /* Başlanğıcda gizli */
-    position: fixed; /* Ekranın üzərində qalır */
-    z-index: 1001; /* Digər elementlərdən üstün olmalı */
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto; /* Zəruri hallarda scroll */
-    background-color: rgba(0,0,0,0.5); /* Yarı-şəffaf qara fon */
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-}
-
-.modal.show {
-    display: flex; /* JavaScript ilə göstərmək üçün */
-}
-
-.modal-content {
-    background-color: var(--card-bg-color);
-    margin: auto;
-    padding: 30px;
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    width: 90%;
-    max-width: 500px;
-    box-shadow: 0 5px 15px var(--shadow-medium);
-    position: relative;
-    text-align: center;
-    animation: fadeIn 0.3s ease-out;
-}
-
-.modal-content p {
-    font-size: 18px;
-    margin-bottom: 25px;
-    color: var(--text-color);
-    white-space: pre-wrap; /* Satır sonlarını qorumaq üçün */
-}
-
-.modal-content .btn {
-    padding: 10px 25px;
-    font-size: 16px;
-}
-
-.close-button {
-    color: #aaa;
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    font-size: 30px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
-
-.close-button:hover,
-.close-button:focus {
-    color: #333;
-    text-decoration: none;
-}
-
-/* Animasiyalar */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* Responsivlik */
-/* Tablet üçün üfüqi rejim (responsive) */
-@media (max-width: 1024px) {
-    main {
+    /* Google Fonts - Inter */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+    :root {
+        --primary-color: #ff6600;
+        --secondary-color: #f0f0f0;
+        --text-color: #333;
+        --border-color: #ddd;
+        --bg-color: #f8f8f8;
+        --card-bg-color: #fff;
+        --shadow-light: rgba(0, 0, 0, 0.05);
+        --shadow-medium: rgba(0, 0, 0, 0.1);
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Inter', Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        display: flex;
         flex-direction: column;
-        padding: 15px;
+        min-height: 100vh;
+        overflow-x: hidden;
+        /* Üfüqi scrollu əngəlləyirik */
     }
 
-    .menu-section, .order-summary-section {
-        flex: none; /* Flex xüsusiyyətini ləğv edirik */
-        width: 100%; /* Tam eni tutur */
-    }
-
-    .order-summary-section {
-        margin-top: 20px;
-    }
-
-    .menu-items-grid {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    }
-}
-
-@media (max-width: 768px) {
     header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 30px;
+        background-color: var(--card-bg-color);
+        border-bottom: 1px solid var(--border-color);
+        box-shadow: 0 2px 4px var(--shadow-light);
+        flex-wrap: wrap;
+        /* Kiçik ekranlarda bükülməsi üçün */
+        gap: 15px;
+        /* Elementlər arasında boşluq */
     }
 
-    nav {
-        width: 100%;
-        justify-content: flex-end;
+    .logo {
+        display: flex;
+        align-items: center;
         gap: 10px;
+    }
+
+    .logo img {
+        height: 50px;
+        /* Logo ölçüsü */
+        border-radius: 8px;
     }
 
     .logo h1 {
-        font-size: 28px;
+        font-size: 32px;
+        color: var(--primary-color);
+        margin: 0;
+        font-weight: 700;
+    }
+
+    nav {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+    .table-number-input,
+    .lang-selector {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .table-number-input label,
+    .lang-selector label {
+        font-size: 16px;
+        color: var(--text-color);
+        font-weight: 500;
     }
 
     .table-number-input input,
     .lang-selector select {
-        font-size: 14px;
-        padding: 6px 10px;
+        padding: 8px 12px;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        background-color: var(--secondary-color);
+        font-size: 16px;
+        cursor: pointer;
+        outline: none;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .table-number-input input:focus,
+    .lang-selector select:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 2px rgba(255, 102, 0, 0.2);
     }
 
     main {
-        padding: 15px;
-        gap: 15px;
+        display: flex;
+        flex-grow: 1;
+        padding: 25px;
+        gap: 25px;
+        /* Sectionlar arasında boşluq */
+        flex-wrap: wrap;
+        /* Kiçik ekranlarda bükülməsi üçün */
     }
 
-    .menu-section, .order-summary-section {
-        padding: 15px;
-    }
-
-    .menu-items-grid {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 15px;
-    }
-
-    .menu-item img {
-        height: 160px;
-    }
-
-    .item-info h3 {
-        font-size: 18px;
-    }
-
-    .item-info p {
-        font-size: 13px;
-    }
-
-    .item-price {
-        font-size: 20px;
-    }
-
-    .item-actions button {
-        padding: 8px 12px;
-        font-size: 18px;
-    }
-
-    .item-actions span {
-        font-size: 20px;
-        min-width: 30px;
-    }
-
-    .order-summary-section h2 {
-        font-size: 24px;
-    }
-
-    .order-totals p {
-        font-size: 22px;
-    }
-
-    .btn {
-        padding: 10px 20px;
-        font-size: 16px;
-    }
-
-    .confirmation-page h2 {
-        font-size: 30px;
-    }
-
-    .confirmation-page p {
-        font-size: 16px;
-    }
-}
-
-@media (max-width: 480px) {
-    header {
-        align-items: center;
-    }
-
-    nav {
-        justify-content: center;
+    .menu-section {
+        flex: 3;
+        /* Menyu hissəsi daha geniş olsun */
+        min-width: 60%;
+        /* Minimum en */
+        background-color: var(--card-bg-color);
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px var(--shadow-medium);
+        display: flex;
+        /* İçərisindəki elementləri flex ilə idarə etmək üçün */
         flex-direction: column;
-        gap: 10px;
+        /* Kateqoriyalar yuxarıda, menyu aşağıda */
+        gap: 20px;
+        /* Kateqoriyalar və menyu arasında boşluq */
     }
+
+    .category-buttons-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 10px;
+        /* Kateqoriyalar və menyu arasında əlavə boşluq */
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 15px;
+    }
+
+    .category-button {
+        padding: 10px 20px;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        background-color: var(--secondary-color);
+        color: var(--text-color);
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.1s ease;
+        box-shadow: 0 2px 5px var(--shadow-light);
+    }
+
+    .category-button:hover {
+        background-color: #e0e0e0;
+        transform: translateY(-2px);
+    }
+
+    .category-button.active {
+        background-color: var(--primary-color);
+        color: white;
+        border-color: var(--primary-color);
+        box-shadow: 0 4px 10px rgba(255, 102, 0, 0.3);
+    }
+
+    .category-button.active:hover {
+        background-color: #e65c00;
+        transform: translateY(-2px);
+    }
+
 
     .menu-items-grid {
-        grid-template-columns: 1fr; /* Kiçik ekranlarda tək sütun */
-    }
-
-    .menu-item img {
-        height: 150px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        /* Responsiv grid */
+        gap: 25px;
     }
 
     .menu-item {
-        margin: 0 auto; /* Mərkəzləşdirin */
-        max-width: 300px;
+        background-color: var(--card-bg-color);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        box-shadow: 0 4px 10px var(--shadow-light);
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+
+    .menu-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px var(--shadow-medium);
+    }
+
+    .menu-item img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-bottom: 1px solid var(--border-color);
+        border-radius: 12px 12px 0 0;
+    }
+
+    .item-info {
+        padding: 15px;
+        flex-grow: 1;
+        /* Mətn hissəsinin böyüməsini təmin edir */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .item-info h3 {
+        margin-top: 0;
+        margin-bottom: 10px;
+        font-size: 22px;
+        color: var(--primary-color);
+        font-weight: 600;
+    }
+
+    .item-info p {
+        font-size: 15px;
+        color: #666;
+        margin-bottom: 15px;
+        line-height: 1.5;
+    }
+
+    .item-price {
+        font-size: 24px;
+        font-weight: bold;
+        color: var(--text-color);
+        margin-bottom: 15px;
+    }
+
+    .item-actions {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        margin-top: 10px;
+    }
+
+    .item-actions button {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 20px;
+        transition: background-color 0.3s ease, transform 0.1s ease;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .item-actions button:hover {
+        background-color: #e65c00;
+        transform: translateY(-2px);
+    }
+
+    .item-actions button:active {
+        transform: translateY(0);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    .item-actions span {
+        font-size: 22px;
+        font-weight: bold;
+        color: var(--text-color);
+        min-width: 35px;
+        text-align: center;
+    }
+
+    .btn {
+        padding: 14px 28px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 18px;
+        font-weight: 600;
+        transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
+        text-decoration: none;
+        /* Link kimi istifadə oluna bilər */
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .btn.primary {
+        background-color: var(--primary-color);
+        color: white;
+        box-shadow: 0 4px 10px rgba(255, 102, 0, 0.3);
+    }
+
+    .btn.primary:hover {
+        background-color: #e65c00;
+        transform: translateY(-3px);
+        box-shadow: 0 6px 15px rgba(255, 102, 0, 0.4);
+    }
+
+    .btn.primary:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 5px rgba(255, 102, 0, 0.4);
+    }
+
+    .btn.secondary {
+        background-color: var(--secondary-color);
+        color: var(--text-color);
+        border: 1px solid var(--border-color);
+        box-shadow: 0 2px 5px var(--shadow-light);
+    }
+
+    .btn.secondary:hover {
+        background-color: #e0e0e0;
+        transform: translateY(-3px);
+        box-shadow: 0 4px 10px var(--shadow-medium);
+    }
+
+    .btn.secondary:active {
+        transform: translateY(0);
+        box-shadow: 0 1px 3px var(--shadow-medium);
     }
 
     .order-summary-section {
-        min-width: unset; /* Minimum eni sıfırlayın */
+        flex: 1;
+        /* Sifariş xülasəsi hissəsi daha dar olsun */
+        min-width: 300px;
+        background-color: var(--card-bg-color);
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px var(--shadow-medium);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .order-summary-section h2 {
+        margin-top: 0;
+        color: var(--primary-color);
+        font-size: 28px;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+        font-weight: 600;
+    }
+
+    .order-list {
+        flex-grow: 1;
+        overflow-y: auto;
+        /* Sifarişlər çox olduqda scroll edilsin */
+        max-height: 50vh;
+        /* Maksimum hündürlük */
+        margin-bottom: 20px;
+        padding-right: 10px;
+        /* Scrollbar üçün yer */
+    }
+
+    .order-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 0;
+        border-bottom: 1px dashed var(--border-color);
+    }
+
+    .order-item:last-child {
+        border-bottom: none;
+    }
+
+    .order-item-details {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 17px;
+    }
+
+    .order-item-details span {
+        font-weight: 500;
+        color: var(--text-color);
+    }
+
+    .order-item-price {
+        font-weight: bold;
+        color: var(--primary-color);
+        font-size: 18px;
+    }
+
+    .empty-cart-message {
+        text-align: center;
+        color: #888;
+        font-style: italic;
+        padding: 20px;
+        font-size: 16px;
+    }
+
+    .order-totals {
+        text-align: right;
+        padding-top: 15px;
+        border-top: 1px solid var(--border-color);
+        margin-top: auto;
+        /* Aşağıya yapışdırır */
+    }
+
+    .order-totals p {
+        font-size: 26px;
+        font-weight: bold;
+        color: var(--text-color);
+        margin: 0;
+    }
+
+    .order-totals #total-price {
+        color: var(--primary-color);
+    }
+
+    .order-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-top: 20px;
+    }
+
+    /* Sifariş təsdiq səhifəsi üçün stilizasiya (Gizli qalacaq, JS ilə göstəriləcək) */
+    .confirmation-page {
+        display: none;
+        /* Başlanğıcda gizli */
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 50px;
+        background-color: var(--bg-color);
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1000;
+    }
+
+    .confirmation-page.active {
+        display: flex;
+        /* Aktiv olduqda göstər */
+    }
+
+    .confirmation-page h2 {
+        color: var(--primary-color);
+        font-size: 36px;
+        margin-bottom: 20px;
+    }
+
+    .confirmation-page p {
+        font-size: 18px;
+        color: #666;
+        margin-bottom: 30px;
+    }
+
+    .confirmation-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .payment-options {
+        display: none;
+        /* Başlanğıcda gizli */
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 15px;
+    }
+
+    .estimated-time-display {
+        margin-top: 20px;
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--primary-color);
+    }
+
+    /* Custom Modal Stili */
+    .modal {
+        display: none;
+        /* Başlanğıcda gizli */
+        position: fixed;
+        /* Ekranın üzərində qalır */
+        z-index: 1001;
+        /* Digər elementlərdən üstün olmalı */
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        /* Zəruri hallarda scroll */
+        background-color: rgba(0, 0, 0, 0.5);
+        /* Yarı-şəffaf qara fon */
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .modal.show {
+        display: flex;
+        /* JavaScript ilə göstərmək üçün */
     }
 
     .modal-content {
-        padding: 20px;
+        background-color: var(--card-bg-color);
+        margin: auto;
+        padding: 30px;
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        width: 90%;
+        max-width: 500px;
+        box-shadow: 0 5px 15px var(--shadow-medium);
+        position: relative;
+        text-align: center;
+        animation: fadeIn 0.3s ease-out;
     }
-}
 
-.order-summary-section {
-    flex: 1;
-    min-width: 300px;
-    background-color: var(--card-bg-color);
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px var(--shadow-medium);
-    display: flex;
-    flex-direction: column;
-    /* Boş olanda yuxarı yapışdırmaq üçün */
-    justify-content: flex-start; /* Başlanğıcda yuxarıya */
-}
+    .modal-content p {
+        font-size: 18px;
+        margin-bottom: 25px;
+        color: var(--text-color);
+        white-space: pre-wrap;
+        /* Satır sonlarını qorumaq üçün */
+    }
 
-/* Səbət boş olduqda mesajı göstər */
-.empty-cart-message {
-    text-align: center;
-    color: var(--text-color-light);
-    font-style: italic;
-    margin-bottom: 20px; /* Aşağıdakı elementlərdən məsafə */
-}
+    .modal-content .btn {
+        padding: 10px 25px;
+        font-size: 16px;
+    }
 
-/* Səbət boş olmayanda gizlət */
-.order-summary-section.has-items .empty-cart-message {
-    display: none;
-}
+    .close-button {
+        color: #aaa;
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        font-size: 30px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: color 0.3s ease;
+    }
 
-.order-list {
-    /* Bu hissəyə artıq flex-grow vermirik, çünki dinamik hündürlük olacaq */
-    /* overflow-y: auto; və max-height-i silmişik */
-    padding-right: 0;
-    margin-bottom: 20px; /* Ümumi qiymətdən əvvəl boşluq */
-    /* Səbət boş olanda siyahı hissəsinin boş olmasını təmin edir */
-    flex-grow: 0; /* Boş olanda genişlənməsin */
-}
+    .close-button:hover,
+    .close-button:focus {
+        color: #333;
+        text-decoration: none;
+    }
 
-.order-summary-section.has-items .order-list {
-    /* Səbətdə məhsullar olanda flex-grow-u aktivləşdiririk ki,
-       məhsullar artdıqca bu hissə genişlənsin */
-    flex-grow: 1;
-}
+    /* Animasiyalar */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
 
-.order-totals {
-    text-align: right;
-    padding-top: 15px;
-    border-top: 1px solid var(--border-color);
-    margin-top: 0; /* Əvvəlki margin-top:auto-nu silmişdik */
-}
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
 
-.order-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-top: 20px;
-}
+    /* Responsivlik */
+    /* Tablet üçün üfüqi rejim (responsive) */
+    @media (max-width: 1024px) {
+        main {
+            flex-direction: column;
+            padding: 15px;
+        }
+
+        .menu-section,
+        .order-summary-section {
+            flex: none;
+            /* Flex xüsusiyyətini ləğv edirik */
+            width: 100%;
+            /* Tam eni tutur */
+        }
+
+        .order-summary-section {
+            margin-top: 20px;
+        }
+
+        .menu-items-grid {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+    }
+
+    @media (max-width: 768px) {
+        header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px 20px;
+        }
+
+        nav {
+            width: 100%;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .logo h1 {
+            font-size: 28px;
+        }
+
+        .table-number-input input,
+        .lang-selector select {
+            font-size: 14px;
+            padding: 6px 10px;
+        }
+
+        main {
+            padding: 15px;
+            gap: 15px;
+        }
+
+        .menu-section,
+        .order-summary-section {
+            padding: 15px;
+        }
+
+        .menu-items-grid {
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .menu-item img {
+            height: 160px;
+        }
+
+        .item-info h3 {
+            font-size: 18px;
+        }
+
+        .item-info p {
+            font-size: 13px;
+        }
+
+        .item-price {
+            font-size: 20px;
+        }
+
+        .item-actions button {
+            padding: 8px 12px;
+            font-size: 18px;
+        }
+
+        .item-actions span {
+            font-size: 20px;
+            min-width: 30px;
+        }
+
+        .order-summary-section h2 {
+            font-size: 24px;
+        }
+
+        .order-totals p {
+            font-size: 22px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+
+        .confirmation-page h2 {
+            font-size: 30px;
+        }
+
+        .confirmation-page p {
+            font-size: 16px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        header {
+            align-items: center;
+        }
+
+        nav {
+            justify-content: center;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .menu-items-grid {
+            grid-template-columns: 1fr;
+            /* Kiçik ekranlarda tək sütun */
+        }
+
+        .menu-item img {
+            height: 150px;
+        }
+
+        .menu-item {
+            margin: 0 auto;
+            /* Mərkəzləşdirin */
+            max-width: 300px;
+        }
+
+        .order-summary-section {
+            min-width: unset;
+            /* Minimum eni sıfırlayın */
+        }
+
+        .modal-content {
+            padding: 20px;
+        }
+    }
+
+    .order-summary-section {
+        flex: 1;
+        min-width: 300px;
+        background-color: var(--card-bg-color);
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px var(--shadow-medium);
+        display: flex;
+        flex-direction: column;
+        /* Boş olanda yuxarı yapışdırmaq üçün */
+        justify-content: flex-start;
+        /* Başlanğıcda yuxarıya */
+    }
+
+    /* Səbət boş olduqda mesajı göstər */
+    .empty-cart-message {
+        text-align: center;
+        color: var(--text-color-light);
+        font-style: italic;
+        margin-bottom: 20px;
+        /* Aşağıdakı elementlərdən məsafə */
+    }
+
+    /* Səbət boş olmayanda gizlət */
+    .order-summary-section.has-items .empty-cart-message {
+        display: none;
+    }
+
+    .order-list {
+        /* Bu hissəyə artıq flex-grow vermirik, çünki dinamik hündürlük olacaq */
+        /* overflow-y: auto; və max-height-i silmişik */
+        padding-right: 0;
+        margin-bottom: 20px;
+        /* Ümumi qiymətdən əvvəl boşluq */
+        /* Səbət boş olanda siyahı hissəsinin boş olmasını təmin edir */
+        flex-grow: 0;
+        /* Boş olanda genişlənməsin */
+    }
+
+    .order-summary-section.has-items .order-list {
+        /* Səbətdə məhsullar olanda flex-grow-u aktivləşdiririk ki,
+        məhsullar artdıqca bu hissə genişlənsin */
+        flex-grow: 1;
+    }
+
+    .order-totals {
+        text-align: right;
+        padding-top: 15px;
+        border-top: 1px solid var(--border-color);
+        margin-top: 0;
+        /* Əvvəlki margin-top:auto-nu silmişdik */
+    }
+
+    .order-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-top: 20px;
+    }

@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
             noServiceRequestsMessage.style.display = 'none';
             serviceRequests.forEach(request => serviceRequestsList.appendChild(createRequestCard(request)));
         }
-        
+
         saveToLocalStorage(); // Hər yeniləmədən sonra yaddaşa yaz
     }
 
@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let nextRequestId = 1;
 
     // Yeni sifariş əlavə etmə funksiyası (simulyasiya üçün)
-    window.addNewSimulatedOrder = function(tableNum, items) {
+    window.addNewSimulatedOrder = function (tableNum, items) {
         const newOrder = {
             id: nextOrderId++,
             tableNumber: tableNum,
@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Yeni xidmət sorğusu əlavə etmə funksiyası (simulyasiya üçün)
-    window.addNewSimulatedRequest = function(tableNum, type) {
+    window.addNewSimulatedRequest = function (tableNum, type) {
         const newRequest = {
             id: nextRequestId++,
             tableNumber: tableNum,
