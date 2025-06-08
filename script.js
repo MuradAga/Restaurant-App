@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Tərcümə məlumatları (Rus dili üçün fallback ilə)
     const translations = {
         az: {
-            title: "TabletMenu",
+            title: "Yummi",
             tableNumberLabel: "Masa Nömrəsi:",
             languageLabel: "Dil:",
             yourOrder: "Sizin Sifarişiniz",
@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
             item_8_description: "Qazsız su"
         },
         en: {
-            title: "TabletMenu",
+            title: "Yummi",
             tableNumberLabel: "Table Number:",
             languageLabel: "Language:",
             yourOrder: "Your Order",
@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         ru: {
             // Rus dili üçün tərcümələr. Əgər bir tərcümə yoxdursa, Azərbaycan dilindən götürüləcək.
-            title: "TabletMenu",
+            title: "Yummi",
             tableNumberLabel: "Номер Стола:",
             languageLabel: "Язык:",
             yourOrder: "Ваш Заказ",
