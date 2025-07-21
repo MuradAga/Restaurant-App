@@ -11,7 +11,26 @@
 </head>
 
 <body>
-    <header>
+    <!-- 1. Giriş və Dil Seçimi Ekranı -->
+    <div id="welcome-screen" class="screen active">
+        <div class="welcome-content">
+            <h2 id="welcome-title" data-key="welcomeTitle">Xoş gəlmisiniz!</h2>
+            <div class="lang-select-block">
+                <label for="welcome-language" data-key="selectLanguage">Dil seçin:</label>
+                <select id="welcome-language">
+                    <option value="az">Azərbaycan</option>
+                    <option value="en">English</option>
+                    <option value="ru">Русский</option>
+                </select>
+            </div>
+            <button id="start-order-btn" class="btn primary" data-key="startOrder">Sifarişə başla</button>
+            <button id="call-waiter-btn-welcome" class="btn secondary" data-key="callWaiter">Ofisiantı çağır</button>
+            <button id="request-bill-btn-welcome" class="btn secondary" data-key="requestBill">Hesabı istə</button>
+        </div>
+    </div>
+
+    <!-- 2. Əsas axış (mövcud kod) -->
+    <header style="display:none;">
         <div class="logo">
             <img src="files/Yummi_Logo.png" alt="Yummi Logo">
             <h1>Yummi</h1>
@@ -42,8 +61,7 @@
             </div>
         </nav>
     </header>
-
-    <main id="main-content">
+    <main id="main-content" style="display:none;">
         <section class="menu-section">
             <div class="category-buttons-container">
             </div>
@@ -66,6 +84,47 @@
         </aside>
     </main>
 
+    <!-- 3. Ofisiant çağırıldı təsdiqi -->
+    <div id="waiter-called-screen" class="screen">
+        <div class="info-content">
+            <p data-key="waiterComing">Ofisiant tezliklə sizin yanınıza gələcək.</p>
+            <button class="btn primary" id="waiter-back-btn" data-key="backToMain">Əsas səhifəyə qayıt</button>
+        </div>
+    </div>
+
+    <!-- 4. Hesab istə və ödəniş növü seçimi -->
+    <div id="bill-request-screen" class="screen">
+        <div class="info-content">
+            <p data-key="totalAmount">Yekun məbləğ: <span id="bill-total">0</span> azn</p>
+            <div>
+                <label data-key="selectPayment">Ödəniş növünü seçin:</label>
+                <input type="radio" name="payment-method" value="cash" id="pay-cash"><label for="pay-cash" data-key="cash">Nağd</label>
+                <input type="radio" name="payment-method" value="card" id="pay-card"><label for="pay-card" data-key="card">Kart</label>
+            </div>
+            <button class="btn primary" id="bill-ok-btn" data-key="ok">OK</button>
+        </div>
+    </div>
+
+    <!-- 5. Sifariş təsdiqləndi və əlavə seçimlər -->
+    <div id="order-confirmed-screen" class="screen">
+        <div class="info-content">
+            <h2 data-key="orderConfirmed">Sifarişiniz təsdiqləndi!</h2>
+            <p data-key="tableNumber">Masa №<span id="confirmed-table-num"></span></p>
+            <button class="btn primary" id="add-more-btn" data-key="addToOrder">Sifarişə əlavə et</button>
+            <button class="btn secondary" id="call-waiter-btn-confirmed" data-key="callWaiter">Ofisiantı çağır</button>
+            <button class="btn secondary" id="request-bill-btn-confirmed" data-key="requestBill">Hesabı istə</button>
+        </div>
+    </div>
+
+    <!-- 6. Sifariş əlavə edildi təsdiqi -->
+    <div id="order-added-screen" class="screen">
+        <div class="info-content">
+            <p data-key="orderAdded">Sifarişiniz əlavə edildi. Tezliklə hazır olacaq.</p>
+            <button class="btn primary" id="order-added-back-btn" data-key="backToMain">Əsas səhifəyə qayıt</button>
+        </div>
+    </div>
+
+    <!-- Mövcud modal və confirmation bölmələri saxlanılır -->
     <div id="confirmation-page" class="confirmation-page">
         <h2 data-key="orderConfirmed">Sifarişiniz Təsdiqləndi!</h2>
         <p data-key="orderSuccess">Sifarişiniz uğurla qəbul edildi. Ofisiant qısa zamanda sizinlə əlaqə saxlayacaq.</p>

@@ -77,6 +77,9 @@ document.addEventListener('DOMContentLoaded', () => {
             paymentMethodSelected: "Ödəniş növü: {method} seçildi. Ofisiant hesabı gətirəcək.",
             backToMenu: "Menyuya Qayıt",
             selectItems: "Zəhmət olmasa sifariş etmək üçün məhsul seçin.",
+            welcomeTitle: "Xoş gəlmisiniz!",
+            selectLanguage: "Dil seçin:",
+            startOrder: "Sifarişə başla",
             // Menu item translations
             item_1_name: "Texas Burger",
             item_1_description: "Mal əti, cheddar pendiri, göbələk, pomidor, soğan, Barbekü sousu",
@@ -93,7 +96,14 @@ document.addEventListener('DOMContentLoaded', () => {
             item_7_name: "Coca-Cola (0.5L)",
             item_7_description: "Soyuq Coca-Cola",
             item_8_name: "Su (0.5L)",
-            item_8_description: "Qazsız su"
+            item_8_description: "Qazsız su",
+            waiterComing: "Ofisiant tezliklə sizin yanınıza gələcək.",
+            backToMain: "Əsas səhifəyə qayıt",
+            totalAmount: "Yekun məbləğ:",
+            selectPayment: "Ödəniş növünü seçin:",
+            ok: "OK",
+            tableNumber: "Masa №",
+            orderAdded: "Sifarişiniz əlavə edildi. Tezliklə hazır olacaq.",
         },
         en: {
             title: "Yummi",
@@ -117,6 +127,9 @@ document.addEventListener('DOMContentLoaded', () => {
             paymentMethodSelected: "Payment method: {method} selected. The waiter will bring the bill.",
             backToMenu: "Back to Menu",
             selectItems: "Please select items to order.",
+            welcomeTitle: "Welcome!",
+            selectLanguage: "Select language:",
+            startOrder: "Start Order",
             // Menu item translations
             item_1_name: "Texas Burger",
             item_1_description: "Beef, cheddar cheese, mushrooms, tomatoes, onions, BBQ sauce",
@@ -133,7 +146,14 @@ document.addEventListener('DOMContentLoaded', () => {
             item_7_name: "Coca-Cola (0.5L)",
             item_7_description: "Cold Coca-Cola",
             item_8_name: "Water (0.5L)",
-            item_8_description: "Still water"
+            item_8_description: "Still water",
+            waiterComing: "The waiter will come to your table soon.",
+            backToMain: "Back to main page",
+            totalAmount: "Total amount:",
+            selectPayment: "Select payment method:",
+            ok: "OK",
+            tableNumber: "Table №",
+            orderAdded: "Your order has been added. It will be ready soon.",
         },
         ru: {
             // Rus dili üçün tərcümələr. Əgər bir tərcümə yoxdursa, Azərbaycan dilindən götürüləcək.
@@ -156,9 +176,20 @@ document.addEventListener('DOMContentLoaded', () => {
             waiterCalled: "Официант вызван! Он подойдет к вам в ближайшее время.",
             billRequested: "Запрос счета отправлен! Пожалуйста, выберите способ оплаты.",
             paymentMethodSelected: "Способ оплаты: {method} выбран. Официант принесет счет.",
-            backToMenu: "Вернуться в Меню"
+            backToMenu: "Вернуться в Меню",
+            selectItems: "Пожалуйста, выберите товары для заказа.",
+            welcomeTitle: "Добро пожаловать!",
+            selectLanguage: "Выберите язык:",
+            startOrder: "Начать заказ",
             // Digər menyu elementləri üçün tərcümələr Azərbaycan dilindən fallback olacaq
             // Məsələn: item_1_name: "Техасский Бургер"
+            waiterComing: "Официант скоро подойдет к вашему столу.",
+            backToMain: "На главную страницу",
+            totalAmount: "Итоговая сумма:",
+            selectPayment: "Выберите способ оплаты:",
+            ok: "OK",
+            tableNumber: "Стол №",
+            orderAdded: "Ваш заказ добавлен. Скоро будет готов.",
         }
     };
 
@@ -438,6 +469,127 @@ document.addEventListener('DOMContentLoaded', () => {
             showModal(getTranslation('backToMenu'));
         }, 2000);
     });
+
+    // Yeni mərhələ ekranları üçün elementləri seçirik
+    const welcomeScreen = document.getElementById('welcome-screen');
+    const startOrderBtn = document.getElementById('start-order-btn');
+    const welcomeLangSelect = document.getElementById('welcome-language');
+    const callWaiterBtnWelcome = document.getElementById('call-waiter-btn-welcome');
+    const requestBillBtnWelcome = document.getElementById('request-bill-btn-welcome');
+
+    const waiterCalledScreen = document.getElementById('waiter-called-screen');
+    const waiterBackBtn = document.getElementById('waiter-back-btn');
+
+    const billRequestScreen = document.getElementById('bill-request-screen');
+    const billTotalSpan = document.getElementById('bill-total');
+    const billOkBtn = document.getElementById('bill-ok-btn');
+
+    const orderConfirmedScreen = document.getElementById('order-confirmed-screen');
+    const confirmedTableNum = document.getElementById('confirmed-table-num');
+    const addMoreBtn = document.getElementById('add-more-btn');
+    const callWaiterBtnConfirmed = document.getElementById('call-waiter-btn-confirmed');
+    const requestBillBtnConfirmed = document.getElementById('request-bill-btn-confirmed');
+
+    const orderAddedScreen = document.getElementById('order-added-screen');
+    const orderAddedBackBtn = document.getElementById('order-added-back-btn');
+
+    // Ekranlar arasında keçid funksiyası
+    function showScreen(screen) {
+        // Bütün .screen-ləri gizlət
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        if (screen) screen.classList.add('active');
+        // Əsas header və main-i də gizlət
+        header.style.display = 'none';
+        mainContent.style.display = 'none';
+    }
+    function showMain() {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        header.style.display = 'flex';
+        mainContent.style.display = 'flex';
+    }
+
+    // Giriş ekranında dil seçimi
+    welcomeLangSelect.addEventListener('change', (e) => {
+        currentLang = e.target.value;
+        languageSelector.value = currentLang;
+        updateTexts();
+    });
+    // Əsas header-də dil dəyişəndə də sinxron saxla
+    languageSelector.addEventListener('change', (e) => {
+        currentLang = e.target.value;
+        welcomeLangSelect.value = currentLang;
+        updateTexts();
+    });
+
+    // Sifarişə başla düyməsi
+    startOrderBtn.addEventListener('click', () => {
+        showMain();
+    });
+
+    // Ofisiantı çağır (giriş ekranı)
+    callWaiterBtnWelcome.addEventListener('click', () => {
+        showScreen(waiterCalledScreen);
+    });
+    // Ofisiantı çağır (sifariş təsdiqləndi ekranı)
+    callWaiterBtnConfirmed.addEventListener('click', () => {
+        showScreen(waiterCalledScreen);
+    });
+    // Ofisiantı çağır (əsas menyudan)
+    callWaiterBtn.addEventListener('click', () => {
+        showScreen(waiterCalledScreen);
+    });
+    // Ofisiant çağırıldı ekranından geri
+    waiterBackBtn.addEventListener('click', () => {
+        showScreen(welcomeScreen);
+    });
+
+    // Hesabı istə (giriş ekranı)
+    requestBillBtnWelcome.addEventListener('click', () => {
+        billTotalSpan.textContent = totalPriceSpan.textContent;
+        showScreen(billRequestScreen);
+    });
+    // Hesabı istə (əsas menyudan)
+    requestBillBtn.addEventListener('click', () => {
+        billTotalSpan.textContent = totalPriceSpan.textContent;
+        showScreen(billRequestScreen);
+    });
+    // Hesabı istə (sifariş təsdiqləndi ekranı)
+    requestBillBtnConfirmed.addEventListener('click', () => {
+        billTotalSpan.textContent = totalPriceSpan.textContent;
+        showScreen(billRequestScreen);
+    });
+    // Hesab OK düyməsi
+    billOkBtn.addEventListener('click', () => {
+        // Ödəniş növü seçilibsə, təsdiq modalı göstərə bilərik və ya əsas ekrana qayıda bilərik
+        showScreen(welcomeScreen);
+        cart = [];
+        renderCart();
+        renderMenuItems();
+    });
+
+    // Sifarişi təsdiqlə (əsas menyudan)
+    confirmOrderBtn.addEventListener('click', () => {
+        if (cart.length === 0) {
+            showModal(getTranslation('selectItems'));
+            return;
+        }
+        confirmedTableNum.textContent = tableNumberInput.value;
+        showScreen(orderConfirmedScreen);
+        cart = [];
+        renderCart();
+        renderMenuItems();
+    });
+    // Sifarişə əlavə et (sifariş təsdiqləndi ekranı)
+    addMoreBtn.addEventListener('click', () => {
+        showMain();
+    });
+    // Sifariş əlavə edildi təsdiqi (hazırda sadəcə əsas ekrana qayıdır)
+    orderAddedBackBtn.addEventListener('click', () => {
+        showScreen(welcomeScreen);
+    });
+
+    // İlk açılışda yalnız welcome-screen aktiv olsun
+    showScreen(welcomeScreen);
 
     // Başlanğıcda hər şeyi yüklə
     renderCategoryButtons(); // Əvvəlcə kateqoriya düymələrini yüklə

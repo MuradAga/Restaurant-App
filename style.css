@@ -717,3 +717,54 @@ main {
     gap: 15px;
     margin-top: 20px;
 }
+
+/* Yeni mərhələ ekranları üçün ümumi stil */
+.screen {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: var(--bg-color);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.screen.active {
+    display: flex;
+}
+.welcome-content, .info-content {
+    background: var(--card-bg-color);
+    border-radius: 16px;
+    box-shadow: 0 6px 24px var(--shadow-medium);
+    padding: 40px 32px;
+    min-width: 320px;
+    max-width: 95vw;
+    text-align: center;
+}
+.welcome-content h2 {
+    color: var(--primary-color);
+    font-size: 2.2rem;
+    margin-bottom: 24px;
+}
+.lang-select-block {
+    margin-bottom: 24px;
+}
+.lang-select-block label {
+    font-size: 1.1rem;
+    margin-right: 8px;
+}
+#start-order-btn, #call-waiter-btn-welcome, #request-bill-btn-welcome {
+    margin: 8px 0;
+    width: 100%;
+}
+.info-content p {
+    font-size: 1.2rem;
+    margin-bottom: 24px;
+}
+.info-content button {
+    margin-top: 12px;
+    width: 100%;
+}
