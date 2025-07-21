@@ -80,6 +80,12 @@ document.addEventListener('DOMContentLoaded', () => {
             welcomeTitle: "Xoş gəlmisiniz!",
             selectLanguage: "Dil seçin:",
             startOrder: "Sifarişə başla",
+            // Categories
+            all: "Hamısı",
+            burger: "Burgerlər",
+            sandwich: "Sendviçlər",
+            side: "Əlavələr",
+            drink: "İçkilər",
             // Menu item translations
             item_1_name: "Texas Burger",
             item_1_description: "Mal əti, cheddar pendiri, göbələk, pomidor, soğan, Barbekü sousu",
@@ -130,6 +136,12 @@ document.addEventListener('DOMContentLoaded', () => {
             welcomeTitle: "Welcome!",
             selectLanguage: "Select language:",
             startOrder: "Start Order",
+            // Categories
+            all: "All",
+            burger: "Burgers",
+            sandwich: "Sandwiches",
+            side: "Sides",
+            drink: "Drinks",
             // Menu item translations
             item_1_name: "Texas Burger",
             item_1_description: "Beef, cheddar cheese, mushrooms, tomatoes, onions, BBQ sauce",
@@ -181,15 +193,29 @@ document.addEventListener('DOMContentLoaded', () => {
             welcomeTitle: "Добро пожаловать!",
             selectLanguage: "Выберите язык:",
             startOrder: "Начать заказ",
-            // Digər menyu elementləri üçün tərcümələr Azərbaycan dilindən fallback olacaq
-            // Məsələn: item_1_name: "Техасский Бургер"
-            waiterComing: "Официант скоро подойдет к вашему столу.",
-            backToMain: "На главную страницу",
-            totalAmount: "Итоговая сумма:",
-            selectPayment: "Выберите способ оплаты:",
-            ok: "OK",
-            tableNumber: "Стол №",
-            orderAdded: "Ваш заказ добавлен. Скоро будет готов.",
+            // Categories
+            all: "Все",
+            burger: "Бургеры",
+            sandwich: "Сэндвичи",
+            side: "Гарниры",
+            drink: "Напитки",
+            // Menu item translations
+            item_1_name: "Техасский Бургер",
+            item_1_description: "Говядина, сыр чеддер, грибы, помидоры, лук, барбекю соус",
+            item_2_name: "Калифорнийский Бургер",
+            item_2_description: "Говядина, сыр чеддер, салат, помидоры, красный лук, калифорнийский соус",
+            item_3_name: "Двойной Чизбургер",
+            item_3_description: "Двойная говядина, двойной сыр чеддер, салат, помидоры, красный лук, специальный соус",
+            item_4_name: "Куриный Сэндвич",
+            item_4_description: "Куриное филе, салат, помидоры, специальный соус",
+            item_5_name: "Веган Бургер",
+            item_5_description: "Нутовая котлета, авокадо, салат, помидоры, веганский соус",
+            item_6_name: "Картофель Фри (большой)",
+            item_6_description: "Большая порция картофеля фри",
+            item_7_name: "Кока-Кола (0.5Л)",
+            item_7_description: "Холодная Кока-Кола",
+            item_8_name: "Вода (0.5Л)",
+            item_8_description: "Без газа",
         }
     };
 
