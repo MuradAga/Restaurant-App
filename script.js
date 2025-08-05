@@ -218,6 +218,13 @@ document.addEventListener('DOMContentLoaded', () => {
             item_7_description: "Холодная Кока-Кола",
             item_8_name: "Вода (0.5Л)",
             item_8_description: "Без газа",
+            waiterComing: "Официант скоро подойдет к вашему столику..",
+            backToMain: "Вернуться на главную страницу",
+            totalAmount: "Общая сумма:",
+            selectPayment: "Выберите способ оплаты:",
+            ok: "ХОРОШО",
+            tableNumber: "Стол №",
+            orderAdded: "Ваш заказ добавлен. Скоро будет готов.",
         }
     };
 
