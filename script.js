@@ -31,6 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let cart = []; // Səbətdəki məhsulları saxlayan array
     let currentLang = 'az'; // Cari dil, default Azərbaycan
     let activeCategory = 'all'; // Aktiv kateqoriya, default 'all'
+    // SPA üçün ekran history-si
+    let screenHistory = [];
 
     // Menyu məlumatları (hər məhsula `category` sahəsi əlavə edildi)
     const menuItems = [
@@ -431,7 +433,14 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         console.log("Sifariş Göndərildi:", orderDetails);
-        showModal(getTranslation('orderConfirmed') + "\n\n" + JSON.stringify(orderDetails, null, 2));
+        // Sifariş məlumatlarını daha oxunaqlı şəkildə formatla
+        let orderMessage = getTranslation('orderConfirmed') + "\n\n";
+        orderMessage += getTranslation('tableNumber') + ": " + orderDetails.tableNumber + "\n";
+        orderDetails.items.forEach(item => {
+            orderMessage += item.name + " x " + item.quantity + "\n";
+        });
+        orderMessage += getTranslation('totalPrice') + ": " + orderDetails.total.toFixed(2) + " AZN\n";
+        showModal(orderMessage);
 
         mainContent.style.display = 'none';
         header.style.display = 'none';
@@ -518,12 +527,48 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const orderAddedScreen = document.getElementById('order-added-screen');
     const orderAddedBackBtn = document.getElementById('order-added-back-btn');
+    const backToMenuBtn = document.getElementById('back-to-menu');
+    const backToMainMenuBtn = document.getElementById('back-to-main-menu2');
 
+
+    backToMenuBtn.addEventListener('click', () => {
+        goBack();
+    });
+
+    backToMainMenuBtn.addEventListener('click', () => {
+        goBack();
+    });
+    
+    function goBack() {
+        // Əgər əsas menyudayıqsa və ya yalnız bir ekran varsa, əsas ekrana qayıt
+        if (screenHistory.length <= 1) {
+            showMain();
+            screenHistory = [];
+            return;
+        }
+        // Sonuncu ekrana qayıt
+        screenHistory.pop(); // cari ekrani sil
+        const prevScreen = screenHistory[screenHistory.length - 1];
+        if (prevScreen) {
+            showScreen(prevScreen, true); // true: history-yə əlavə etmə
+        } else {
+            showMain();
+        }
+    }
     // Ekranlar arasında keçid funksiyası
-    function showScreen(screen) {
+    function showScreen(screen, skipHistory) {
         // Bütün .screen-ləri gizlət
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-        if (screen) screen.classList.add('active');
+        if (screen) {
+            screen.classList.add('active');
+            // Əgər history-yə əlavə etmək lazımdırsa
+            if (!skipHistory) {
+                // Eyni ekranı təkrar əlavə etmə
+                if (screenHistory[screenHistory.length - 1] !== screen) {
+                    screenHistory.push(screen);
+                }
+            }
+        }
         // Əsas header və main-i də gizlət
         header.style.display = 'none';
         mainContent.style.display = 'none';
@@ -532,6 +577,8 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
         header.style.display = 'flex';
         mainContent.style.display = 'flex';
+        // Əsas menyuya qayıdanda history-ni sıfırla
+        screenHistory = [];
     }
 
     // Giriş ekranında dil seçimi
@@ -566,7 +613,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     // Ofisiant çağırıldı ekranından geri
     waiterBackBtn.addEventListener('click', () => {
-        showScreen(welcomeScreen);
+        goBack();
     });
 
     // Hesabı istə (giriş ekranı)
@@ -587,6 +634,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Hesab OK düyməsi
     billOkBtn.addEventListener('click', () => {
         // Ödəniş növü seçilibsə, təsdiq modalı göstərə bilərik və ya əsas ekrana qayıda bilərik
+        const paymentMethod = document.querySelector('input[name="payment-method"]:checked');
+        if (!paymentMethod) {
+            showModal(getTranslation('selectPayment')); // Ödəniş növü seçilmədi mesajı
+            alert(getTranslation('selectPayment'));
+            return;
+        }
+
         showScreen(welcomeScreen);
         cart = [];
         renderCart();
@@ -611,7 +665,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     // Sifariş əlavə edildi təsdiqi (hazırda sadəcə əsas ekrana qayıdır)
     orderAddedBackBtn.addEventListener('click', () => {
-        showScreen(welcomeScreen);
+        goBack();
     });
 
     // İlk açılışda yalnız welcome-screen aktiv olsun
@@ -622,4 +676,10 @@ document.addEventListener('DOMContentLoaded', () => {
     renderMenuItems();
     renderCart();
     updateTexts(); // Başlanğıcda mətnləri cari dilə uyğun yenilə
+
+    // DOMContentLoaded daxilində, səhifə yüklənəndə aktiv ekranı history-yə əlavə et
+    const initialScreen = document.querySelector('.screen.active');
+    if (initialScreen) {
+        screenHistory = [initialScreen];
+    }
 });
