@@ -65,22 +65,34 @@ nav {
     flex-wrap: wrap;
 }
 
+.table-number-select select{
+    font-size: 20px;
+    padding: 6px;
+}
+
+.table-number-select label{
+    font-size: 20px;
+}
+
 .table-number-input,
-.lang-selector {
+.lang-selector,
+.lang-select-block {
     display: flex;
     align-items: center;
     gap: 8px;
 }
 
 .table-number-input label,
-.lang-selector label {
+.lang-selector label,
+.lang-select-block label {
     font-size: 16px;
     color: var(--text-color);
     font-weight: 500;
 }
 
 .table-number-input input,
-.lang-selector select {
+.lang-selector select,
+.lang-select-block select {
     padding: 8px 12px;
     border: 1px solid var(--border-color);
     border-radius: 8px;
@@ -92,7 +104,8 @@ nav {
 }
 
 .table-number-input input:focus,
-.lang-selector select:focus {
+.lang-selector select:focus,
+.lang-select-block select:focus {
     border-color: var(--primary-color);
     box-shadow: 0 0 0 2px rgba(255, 102, 0, 0.2);
 }
@@ -748,13 +761,6 @@ main {
     color: var(--primary-color);
     font-size: 2.2rem;
     margin-bottom: 24px;
-}
-.lang-select-block {
-    margin-bottom: 24px;
-}
-.lang-select-block label {
-    font-size: 1.1rem;
-    margin-right: 8px;
 }
 #start-order-btn, #call-waiter-btn-welcome, #request-bill-btn-welcome {
     margin: 8px 0;

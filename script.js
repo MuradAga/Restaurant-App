@@ -110,6 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
             totalAmount: "Yekun məbləğ:",
             selectPayment: "Ödəniş növünü seçin:",
             ok: "OK",
+            back: "Geri",
             tableNumber: "Masa №",
             orderAdded: "Sifarişiniz əlavə edildi. Tezliklə hazır olacaq.",
         },
@@ -166,6 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
             totalAmount: "Total amount:",
             selectPayment: "Select payment method:",
             ok: "OK",
+            back: "Back",
             tableNumber: "Table №",
             orderAdded: "Your order has been added. It will be ready soon.",
         },
@@ -223,6 +225,7 @@ document.addEventListener('DOMContentLoaded', () => {
             totalAmount: "Общая сумма:",
             selectPayment: "Выберите способ оплаты:",
             ok: "ХОРОШО",
+            back: "Назад",
             tableNumber: "Стол №",
             orderAdded: "Ваш заказ добавлен. Скоро будет готов.",
         }
@@ -534,18 +537,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const orderAddedScreen = document.getElementById('order-added-screen');
     const orderAddedBackBtn = document.getElementById('order-added-back-btn');
-    const backToMenuBtn = document.getElementById('back-to-menu');
-    const backToMainMenuBtn = document.getElementById('back-to-main-menu2');
+    const backToHomeFromHesabIste = document.getElementById('back-to-home-from-hesab-iste');
+    const backToHomeFromMenu = document.getElementById('back-to-home-from-menu');
 
 
-    backToMenuBtn.addEventListener('click', () => {
+    backToHomeFromHesabIste.addEventListener('click', () => {
         goBack();
     });
 
-    backToMainMenuBtn.addEventListener('click', () => {
+    backToHomeFromMenu.addEventListener('click', () => {
         goBack();
     });
-    
+
     function goBack() {
         // Əgər əsas menyudayıqsa və ya yalnız bir ekran varsa, əsas ekrana qayıt
         if (screenHistory.length <= 1) {
@@ -677,6 +680,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // İlk açılışda yalnız welcome-screen aktiv olsun
     showScreen(welcomeScreen);
+    showScreen(document.getElementById('main-screen'), false);
 
     // Başlanğıcda hər şeyi yüklə
     renderCategoryButtons(); // Əvvəlcə kateqoriya düymələrini yüklə
