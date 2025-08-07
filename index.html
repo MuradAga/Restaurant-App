@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="az">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
+
 <body>
     <!-- 1. Giriş və Dil Seçimi Ekranı -->
     <div id="welcome-screen" class="screen active">
@@ -15,12 +17,15 @@
             <h2 data-key="welcomeTitle">Xoş gəlmisiniz!</h2>
             <div id="active-order-info-welcome" class="active-order-info">
                 <p><span data-key="activeTable">Aktiv Masa:</span> №<span id="active-table-number-welcome"></span></p>
-                <button id="show-order-details-btn-welcome" class="btn secondary" data-key="orderDetails">Sifariş Detalları</button>
+                <button id="show-order-details-btn-welcome" class="btn secondary" data-key="orderDetails">Sifariş
+                    Detalları</button>
             </div>
             <div class="lang-select-block">
                 <label for="welcome-language" data-key="selectLanguage">Dil seçin:</label>
                 <select id="welcome-language">
-                    <option value="az">Azərbaycan</option><option value="en">English</option><option value="ru">Русский</option>
+                    <option value="az">Azərbaycan</option>
+                    <option value="en">English</option>
+                    <option value="ru">Русский</option>
                 </select>
             </div>
             <button id="start-order-btn" class="btn primary" data-key="startOrder">Sifarişə başla</button>
@@ -32,18 +37,31 @@
     <!-- 2. Əsas axış (Menyu) Ekranı -->
     <div id="menu-screen" class="screen">
         <header>
-            <div class="logo"><img src="files/Yummi_Logo.png" alt="Yummi Logo"><h1>Yummi</h1></div>
+            <div class="logo"><img src="files/Yummi_Logo.png" alt="Yummi Logo">
+                <h1>Yummi</h1>
+            </div>
             <nav>
                 <div class="table-number-select">
                     <label for="table-num" data-key="tableNumberLabel">Masa Nömrəsi:</label>
                     <select id="table-num">
-                        <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
                     </select>
                 </div>
                 <div class="lang-selector">
                     <label for="language" data-key="languageLabel">Dil:</label>
                     <select id="language">
-                        <option value="az">Azərbaycan</option><option value="en">English</option><option value="ru">Русский</option>
+                        <option value="az">Azərbaycan</option>
+                        <option value="en">English</option>
+                        <option value="ru">Русский</option>
                     </select>
                 </div>
             </nav>
@@ -55,11 +73,16 @@
             </section>
             <aside class="order-summary-section">
                 <h2 data-key="yourOrder">Sizin Sifarişiniz</h2>
-                <div class="order-list"><p class="empty-cart-message" data-key="emptyCart">Səbətiniz boşdur.</p></div>
-                <div class="order-totals"><p><span data-key="totalPrice">Ümumi Qiymət:</span> <span id="total-price">0.00</span> AZN</p></div>
+                <div class="order-list">
+                    <p class="empty-cart-message" data-key="emptyCart">Səbətiniz boşdur.</p>
+                </div>
+                <div class="order-totals">
+                    <p><span data-key="totalPrice">Ümumi Qiymət:</span> <span id="total-price">0.00</span> AZN</p>
+                </div>
                 <div class="order-actions">
                     <button id="clear-cart-btn" class="btn secondary" data-key="clearCart">Səbəti Təmizlə</button>
-                    <button id="confirm-order-btn" class="btn primary" data-key="confirmOrder">Sifarişi Təsdiqlə</button>
+                    <button id="confirm-order-btn" class="btn primary" data-key="confirmOrder">Sifarişi
+                        Təsdiqlə</button>
                     <button class="btn secondary" id="back-to-home-from-menu" data-key="back">Geri</button>
                 </div>
             </aside>
@@ -80,8 +103,10 @@
             <p data-key="totalAmount">Yekun məbləğ: <span id="bill-total">0</span> azn</p>
             <div>
                 <label data-key="selectPayment">Ödəniş növünü seçin:</label>
-                <input type="radio" name="payment-method" value="cash" id="pay-cash"><label for="pay-cash" data-key="cash">Nağd</label>
-                <input type="radio" name="payment-method" value="card" id="pay-card"><label for="pay-card" data-key="card">Kart</label>
+                <input type="radio" name="payment-method" value="cash" id="pay-cash"><label for="pay-cash"
+                    data-key="cash">Nağd</label>
+                <input type="radio" name="payment-method" value="card" id="pay-card"><label for="pay-card"
+                    data-key="card">Kart</label>
             </div>
             <button class="btn primary" id="bill-ok-btn" data-key="ok">OK</button>
             <button class="btn secondary" id="back-to-home-from-hesab-iste" data-key="back">Geri</button>
@@ -93,13 +118,15 @@
         <div class="info-content">
             <div id="active-order-info-confirmed" class="active-order-info">
                 <p><span data-key="activeTable">Aktiv Masa:</span> №<span id="active-table-number-confirmed"></span></p>
-                <button id="show-order-details-btn-confirmed" class="btn secondary" data-key="orderDetails">Sifariş Detalları</button>
+                <button id="show-order-details-btn-confirmed" class="btn secondary" data-key="orderDetails">Sifariş
+                    Detalları</button>
             </div>
             <h2 data-key="orderConfirmed">Sifarişiniz təsdiqləndi!</h2>
             <button class="btn primary" id="add-more-btn" data-key="addToOrder">Sifarişə əlavə et</button>
             <button class="btn secondary" id="call-waiter-btn-confirmed" data-key="callWaiter">Ofisiantı çağır</button>
             <button class="btn secondary" id="request-bill-btn-confirmed" data-key="requestBill">Hesabı istə</button>
-            <button class="btn secondary" id="back-to-home-from-confirmed" data-key="backToMain">Əsas Səhifəyə Qayıt</button>
+            <button class="btn secondary" id="back-to-home-from-confirmed" data-key="backToMain">Əsas Səhifəyə
+                Qayıt</button>
         </div>
     </div>
 
@@ -114,4 +141,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>
