@@ -38,6 +38,7 @@ header {
     box-shadow: 0 2px 4px var(--shadow-light);
     flex-wrap: wrap;
     gap: 15px;
+    flex-shrink: 0;
 }
 
 .logo {
@@ -90,6 +91,7 @@ main {
     padding: 25px;
     gap: 25px;
     flex-wrap: wrap;
+    min-height: 0;
 }
 
 .menu-section {
@@ -143,12 +145,6 @@ main {
     flex-direction: column;
     text-align: center;
     box-shadow: 0 4px 10px var(--shadow-light);
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-}
-
-.menu-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px var(--shadow-medium);
 }
 
 .menu-item img {
@@ -163,7 +159,6 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 100%;
 }
 
 .item-info h3 {
@@ -176,7 +171,6 @@ main {
     font-size: 15px;
     color: #666;
     margin-bottom: 15px;
-    line-height: 1.5;
 }
 
 .item-price {
@@ -210,11 +204,11 @@ main {
 }
 
 .btn {
-    padding: 14px 28px;
+    padding: 12px 24px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
     display: inline-flex;
     align-items: center;
@@ -246,62 +240,47 @@ main {
 }
 
 .order-summary-section h2 {
-    margin-top: 0;
+    margin: 0 0 15px 0;
     color: var(--primary-color);
-    font-size: 28px;
+    font-size: 24px;
     border-bottom: 1px solid var(--border-color);
     padding-bottom: 10px;
-    margin-bottom: 20px;
 }
 
 .order-list {
-    flex-grow: 0;
+    flex-grow: 1;
     overflow-y: auto;
-    max-height: 45vh;
+    min-height: 50px;
 }
 
 .order-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 0;
+    padding: 10px 0;
     border-bottom: 1px dashed var(--border-color);
-}
-
-.order-item:last-child {
-    border-bottom: none;
 }
 
 .empty-cart-message {
     text-align: center;
     color: #888;
-    font-style: italic;
     padding: 20px;
-    font-size: 16px;
 }
 
 .order-totals {
+    flex-shrink: 0;
     text-align: right;
     padding-top: 15px;
     border-top: 1px solid var(--border-color);
-    margin-top: 20px;
-}
-
-.order-totals p {
-    font-size: 26px;
-    font-weight: bold;
-    margin: 0;
-}
-
-.order-totals #total-price {
-    color: var(--primary-color);
+    margin-top: 15px;
 }
 
 .order-actions {
+    flex-shrink: 0;
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    margin-top: 20px;
+    gap: 10px;
+    margin-top: 15px;
 }
 
 .modal {
@@ -327,22 +306,9 @@ main {
     border-radius: 12px;
     width: 90%;
     max-width: 500px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     position: relative;
     text-align: center;
-    animation: modalSlideIn 0.3s ease-out;
-}
-
-@keyframes modalSlideIn {
-    from {
-        opacity: 0;
-        transform: translateY(-50px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
 
 .modal-content p {
@@ -352,9 +318,9 @@ main {
 .close-button {
     color: #aaa;
     position: absolute;
-    top: 15px;
-    right: 20px;
-    font-size: 30px;
+    top: 10px;
+    right: 15px;
+    font-size: 28px;
     font-weight: bold;
     cursor: pointer;
 }
@@ -388,6 +354,7 @@ main {
     position: relative;
     flex-grow: 1;
     z-index: 1;
+    height: 100vh;
 }
 
 .welcome-content,
@@ -395,27 +362,12 @@ main {
     background: var(--card-bg-color);
     border-radius: 16px;
     box-shadow: 0 6px 24px var(--shadow-medium);
-    padding: 40px 32px;
+    padding: 30px;
     min-width: 320px;
     max-width: 95vw;
     text-align: center;
 }
 
-.welcome-content h2,
-.info-content h2 {
-    color: var(--primary-color);
-    font-size: 2.2rem;
-    margin-bottom: 12px;
-}
-
-.info-content p {
-    font-size: 1.2rem;
-    margin-bottom: 24px;
-}
-
-#start-order-btn,
-#call-waiter-btn-welcome,
-#request-bill-btn-welcome,
 .info-content button {
     margin-top: 8px;
     width: 100%;
@@ -425,7 +377,7 @@ main {
     display: none;
     width: 100%;
     padding: 15px;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--primary-color);
     border-radius: 8px;
     margin-bottom: 20px;
     background-color: #fff7f2;
@@ -440,5 +392,39 @@ main {
 @media (max-width: 768px) {
     main {
         flex-direction: column;
+        padding: 10px;
+        gap: 10px;
+    }
+
+    .menu-section {
+        flex-grow: 1;
+        overflow-y: auto;
+        min-height: 0;
+        padding: 15px;
+    }
+
+    .order-summary-section {
+        flex-grow: 0;
+        flex-shrink: 0;
+        padding: 15px;
+        box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.08);
+    }
+
+    .order-list {
+        max-height: 18vh;
+    }
+
+    .order-actions {
+        flex-direction: row;
+    }
+
+    .menu-items-grid {
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    .menu-items-grid {
+        grid-template-columns: 1fr;
     }
 }
