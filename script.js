@@ -122,19 +122,19 @@ document.addEventListener('DOMContentLoaded', () => {
             showModal(getTranslation('selectItems'));
             return;
         }
-    
+
         let detailsText = `${getTranslation('orderConfirmed')}\n--------------------\n`;
         detailsText += `${getTranslation('tableNumberLabel')} ${lastConfirmedOrder.tableNumber}\n\n`;
-    
+
         lastConfirmedOrder.items.forEach(item => {
             detailsText += `${item.quantity}x ${getTranslation(`item_${item.id}_name`)} - ${(item.quantity * item.price).toFixed(2)} AZN\n`;
         });
-    
+
         detailsText += `\n${getTranslation('totalPrice')} ${lastConfirmedOrder.total} AZN`;
-    
+
         showModal(detailsText);
     };
-    
+
     if (showOrderDetailsBtnWelcome) {
         showOrderDetailsBtnWelcome.addEventListener('click', displayOrderDetails);
     }
